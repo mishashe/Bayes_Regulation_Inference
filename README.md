@@ -119,8 +119,7 @@ bf_alpha_05 <- bayes_factor_alpha_point_vs_uniform01(
 )
 ```
 
-This long example uses `thin = 1000` so the run remains practical while still
-using `1e7` MCMC iterations.
+This example `1e7` MCMC iterations takes about 13 minutes.
 
 Example output plot:
 
