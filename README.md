@@ -1,6 +1,6 @@
 # BayesRegulationInference
 
-`BayesRegulationInference` is an R package for Bayesian MCMC inference on lineage-level time series using a compiled C++ backend.
+`BayesRegulationInference` is an R package for Bayesian MCMC inference on lineage-level time series using a compiled C++ backend. The method is also described in the accompanying article.
 
 The package provides `bayesian_mcmc()`, which takes a numeric matrix of observations and returns posterior samples, summary statistics, and acceptance diagnostics.
 
