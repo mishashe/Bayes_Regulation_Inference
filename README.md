@@ -1,6 +1,6 @@
 # BayesRegulationInference
 
-`BayesRegulationInference` is an R package for running Bayesian MCMC inference on lineage-level time series using a compiled C++ backend.
+`BayesRegulationInference` is an R package for running Bayesian MCMC inference on lineage-level time series using a compiled C++ backend. It is used and described in detail in the article !!!.
 
 The package exposes one main function, `bayesian_mcmc()`, which takes a numeric matrix of observations and returns posterior samples together with summary statistics and acceptance diagnostics.
 
@@ -80,15 +80,13 @@ source(example_path)
 The script:
 
 - loads `cell_size_simulation.csv`
-- runs `bayesian_mcmc()`
+- runs `bayesian_mcmc()` with `1e7` iterations
 - prints posterior summaries
 - computes a Bayes factor example for `al`
-- writes output plots to an `example_output/` directory
+- writes the alpha posterior plot to an `example_output/` directory
 
 The generated files are:
 
-- `posterior_histograms.pdf`
-- `posterior_histograms.png`
 - `alpha_density_kde.png`
 - `posterior_summary.csv`
 
@@ -107,9 +105,9 @@ vM <- as.matrix(read.csv(csv_path, header = FALSE))
 
 out <- bayesian_mcmc(
   vM = vM,
-  nIter = 10000,
-  burnin = 7000,
-  thin = 1,
+  nIter = 1e7,
+  burnin = 7e6,
+  thin = 1000,
   seed = 1,
   verbose = FALSE
 )
@@ -121,28 +119,12 @@ bf_alpha_05 <- bayes_factor_alpha_point_vs_uniform01(
 )
 ```
 
-Example output plots:
+This long example uses `thin = 1000` so the run remains practical while still
+using `1e7` MCMC iterations.
 
-![Posterior histograms](README_files/posterior_histograms.png)
+Example output plot:
 
 ![Posterior density of al](README_files/alpha_density_kde.png)
-
-Expected console output from the example run:
-
-```text
-Posterior summaries (mean +/- half-width of 95% CrI)
----------------------------------------------------
-sig_xi   : 0.1950 +/- 0.0114   (95% CrI: [0.1794, 0.2021])
-al       : 0.5079 +/- 0.0301   (95% CrI: [0.4733, 0.5334])
-mu0      : 2.0043 +/- 0.0123   (95% CrI: [1.9936, 2.0181])
-sig0     : 0.0440 +/- 0.0140   (95% CrI: [0.0329, 0.0608])
-sig_meas : 0.0298 +/- 0.0386   (95% CrI: [0.0012, 0.0784])
-
-Bayes factor for al = 0.5 versus Uniform(0,1)
----------------------------------------------
-BF12   : 10.0309
-logBF12: 2.3057
-```
 
 ## Minimal example
 
@@ -253,7 +235,7 @@ Advanced arguments:
 
 The expected length of `lb_`, `ub_`, and `par0_` is `nrow(vM) + 5`.
 
-## Bayes factor for `al`
+## Bayes factor for `alpha`
 
 The package also provides `bayes_factor_alpha_point_vs_uniform01()` for a
 Savage-Dickey style Bayes factor on the `al` parameter.
