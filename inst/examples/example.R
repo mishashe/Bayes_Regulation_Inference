@@ -75,39 +75,52 @@ write.csv(
   row.names = FALSE
 )
 
+draw_posterior_panels <- function() {
+  old_par <- par(no.readonly = TRUE)
+  on.exit(par(old_par), add = TRUE)
+
+  par(mfrow = c(2, 3), mar = c(4, 4, 3, 1))
+  for (j in seq_along(param_names)) {
+    hist(
+      theta[, j],
+      breaks = 40,
+      probability = TRUE,
+      main = paste("Posterior of", param_names[j]),
+      xlab = param_names[j],
+      ylab = "Density",
+      col = "grey85",
+      border = "white"
+    )
+    abline(v = post_mean[j], col = "blue", lwd = 2)
+    abline(v = ci95[, j], col = "red", lty = 2, lwd = 2)
+  }
+
+  plot.new()
+  legend(
+    "center",
+    legend = c("Posterior mean", "95% credible interval"),
+    col = c("blue", "red"),
+    lty = c(1, 2),
+    lwd = 2,
+    bty = "n"
+  )
+}
+
 pdf(
   file = file.path(output_dir, "posterior_histograms.pdf"),
   width = 11,
   height = 8.5
 )
-old_par <- par(no.readonly = TRUE)
-par(mfrow = c(2, 3), mar = c(4, 4, 3, 1))
-for (j in seq_along(param_names)) {
-  hist(
-    theta[, j],
-    breaks = 40,
-    probability = TRUE,
-    main = paste("Posterior of", param_names[j]),
-    xlab = param_names[j],
-    ylab = "Density",
-    col = "grey85",
-    border = "white"
-  )
-  abline(v = post_mean[j], col = "blue", lwd = 2)
-  abline(v = ci95[, j], col = "red", lty = 2, lwd = 2)
-}
+draw_posterior_panels()
+dev.off()
 
-plot.new()
-legend(
-  "center",
-  legend = c("Posterior mean", "95% credible interval"),
-  col = c("blue", "red"),
-  lty = c(1, 2),
-  lwd = 2,
-  bty = "n"
+png(
+  filename = file.path(output_dir, "posterior_histograms.png"),
+  width = 1800,
+  height = 1200,
+  res = 180
 )
-
-par(old_par)
+draw_posterior_panels()
 dev.off()
 
 png(
@@ -139,6 +152,7 @@ dev.off()
 cat("\nSaved outputs in:\n")
 cat(output_dir, "\n")
 cat("- posterior_histograms.pdf\n")
+cat("- posterior_histograms.png\n")
 cat("- alpha_density_kde.png\n")
 cat("- posterior_summary.csv\n")
 

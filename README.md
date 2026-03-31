@@ -88,8 +88,61 @@ The script:
 The generated files are:
 
 - `posterior_histograms.pdf`
+- `posterior_histograms.png`
 - `alpha_density_kde.png`
 - `posterior_summary.csv`
+
+Core example code:
+
+```r
+library(BayesRegulationInference)
+
+csv_path <- system.file(
+  "extdata",
+  "cell_size_simulation.csv",
+  package = "BayesRegulationInference"
+)
+
+vM <- as.matrix(read.csv(csv_path, header = FALSE))
+
+out <- bayesian_mcmc(
+  vM = vM,
+  nIter = 10000,
+  burnin = 7000,
+  thin = 1,
+  seed = 1,
+  verbose = FALSE
+)
+
+bf_alpha_05 <- bayes_factor_alpha_point_vs_uniform01(
+  out,
+  alpha0 = 0.5,
+  method = "kde"
+)
+```
+
+Example output plots:
+
+![Posterior histograms](README_files/posterior_histograms.png)
+
+![Posterior density of al](README_files/alpha_density_kde.png)
+
+Expected console output from the example run:
+
+```text
+Posterior summaries (mean +/- half-width of 95% CrI)
+---------------------------------------------------
+sig_xi   : 0.1950 +/- 0.0114   (95% CrI: [0.1794, 0.2021])
+al       : 0.5079 +/- 0.0301   (95% CrI: [0.4733, 0.5334])
+mu0      : 2.0043 +/- 0.0123   (95% CrI: [1.9936, 2.0181])
+sig0     : 0.0440 +/- 0.0140   (95% CrI: [0.0329, 0.0608])
+sig_meas : 0.0298 +/- 0.0386   (95% CrI: [0.0012, 0.0784])
+
+Bayes factor for al = 0.5 versus Uniform(0,1)
+---------------------------------------------
+BF12   : 10.0309
+logBF12: 2.3057
+```
 
 ## Minimal example
 
