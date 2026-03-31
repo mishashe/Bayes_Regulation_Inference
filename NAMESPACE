@@ -1,0 +1,3 @@
+useDynLib(BayesRegulationInference, .registration = TRUE)
+importFrom(Rcpp, evalCpp)
+export(bayesian_mcmc)

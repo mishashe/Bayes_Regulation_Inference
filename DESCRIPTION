@@ -1,0 +1,15 @@
+Package: BayesRegulationInference
+Type: Package
+Title: Bayesian MCMC Inference for Regulation Dynamics
+Version: 0.1.0
+Authors@R: person(given = "Codex", family = "Assistant", role = c("aut", "cre"), email = "codex@example.com")
+Description: Provides an R interface to a C++ implementation of a Bayesian
+    Markov chain Monte Carlo sampler for lineage-level regulation dynamics.
+License: GPL-3
+Encoding: UTF-8
+Imports:
+    Rcpp
+LinkingTo:
+    Rcpp
+SystemRequirements: C++11
+RoxygenNote: 7.3.2
