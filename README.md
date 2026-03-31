@@ -45,6 +45,22 @@ That default is useful when different lineages have different observed lengths a
 
 If zero is a real measurement in your data, set `zeroIsPadding = FALSE`.
 
+## Bundled example input file
+
+The package includes the CSV file `cell_size_simulation.csv` under `extdata`.
+
+You can load it after installation with:
+
+```r
+csv_path <- system.file(
+  "extdata",
+  "cell_size_simulation.csv",
+  package = "BayesRegulationInference"
+)
+
+vM <- as.matrix(read.csv(csv_path, header = FALSE))
+```
+
 ## Minimal example
 
 ```r
@@ -94,6 +110,26 @@ fit$std
 fit$acceptRateOverall
 
 head(fit$samples)
+```
+
+Using the bundled CSV:
+
+```r
+csv_path <- system.file(
+  "extdata",
+  "cell_size_simulation.csv",
+  package = "BayesRegulationInference"
+)
+
+vM <- as.matrix(read.csv(csv_path, header = FALSE))
+
+fit <- bayesian_mcmc(
+  vM,
+  nIter = 2000,
+  burnin = 1000,
+  thin = 10,
+  verbose = FALSE
+)
 ```
 
 ## Parameter layout

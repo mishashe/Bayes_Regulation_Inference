@@ -77,6 +77,11 @@ time point per column. Missing values (\code{NA} and \code{NaN}) are always
 ignored. When \code{zeroIsPadding = TRUE}, zeros are also ignored, which is
 useful when lineages with different lengths are stored in the same matrix.
 
+The package also ships with a bundled CSV example file,
+\code{cell_size_simulation.csv}, under \code{extdata}. It can be located with
+\code{system.file("extdata", "cell_size_simulation.csv", package =
+"BayesRegulationInference")}.
+
 The output parameter names are ordered as:
 \describe{
   \item{\code{mu_1}, ..., \code{mu_N}}{Lineage-specific mean parameters.}
