@@ -61,6 +61,36 @@ csv_path <- system.file(
 vM <- as.matrix(read.csv(csv_path, header = FALSE))
 ```
 
+## Full example script with output plots
+
+The package ships with an installed example script at `inst/examples/example.R`.
+
+After installation, you can locate and run it with:
+
+```r
+example_path <- system.file(
+  "examples",
+  "example.R",
+  package = "BayesRegulationInference"
+)
+
+source(example_path)
+```
+
+The script:
+
+- loads `cell_size_simulation.csv`
+- runs `bayesian_mcmc()`
+- prints posterior summaries
+- computes a Bayes factor example for `al`
+- writes output plots to an `example_output/` directory
+
+The generated files are:
+
+- `posterior_histograms.pdf`
+- `alpha_density_kde.png`
+- `posterior_summary.csv`
+
 ## Minimal example
 
 ```r

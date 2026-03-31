@@ -5,6 +5,8 @@ Version: 0.1.0
 Authors@R: person(given = "Codex", family = "Assistant", role = c("aut", "cre"), email = "codex@example.com")
 Description: Provides an R interface to a C++ implementation of a Bayesian
     Markov chain Monte Carlo sampler for lineage-level regulation dynamics.
+    The package also ships with bundled simulation input data and an example
+    analysis script that generates posterior summary plots.
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/mishashe/Bayes_Regulation_Inference
