@@ -26,6 +26,14 @@
 #' density at `alpha0`. Under the Uniform(0,1) prior, the prior density equals
 #' 1 everywhere in `[0,1]`.
 #'
+#' Values larger than 1 indicate more posterior mass near `alpha0` than would
+#' be expected under the Uniform(0,1) prior. Values smaller than 1 indicate
+#' evidence against the point null.
+#'
+#' The `"kde"` method is smoother and usually preferable for moderate or large
+#' posterior samples. The `"bin"` method is a simpler local estimate that can be
+#' useful as a quick sensitivity check.
+#'
 #' @examples
 #' x <- matrix(
 #'   c(
@@ -46,6 +54,7 @@
 #' )
 #'
 #' bayes_factor_alpha_point_vs_uniform01(fit, alpha0 = 0.5)
+#' bayes_factor_alpha_point_vs_uniform01(fit, alpha0 = 0.5, method = "bin")
 #' @export
 bayes_factor_alpha_point_vs_uniform01 <- function(
   fit,

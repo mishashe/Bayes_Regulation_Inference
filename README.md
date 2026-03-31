@@ -170,6 +170,52 @@ Advanced arguments:
 
 The expected length of `lb_`, `ub_`, and `par0_` is `nrow(vM) + 5`.
 
+## Bayes factor for `al`
+
+The package also provides `bayes_factor_alpha_point_vs_uniform01()` for a
+Savage-Dickey style Bayes factor on the `al` parameter.
+
+It compares:
+
+- `H1`: `al = alpha0`
+- `H2`: `al ~ Uniform(0, 1)`
+
+The function uses posterior samples from `fit$samples` and estimates the
+posterior density at `alpha0`. Since the prior under `H2` is Uniform(0,1), the
+prior density is 1, so the Bayes factor is just the posterior density estimate
+at that point.
+
+Example:
+
+```r
+bf <- bayes_factor_alpha_point_vs_uniform01(
+  fit,
+  alpha0 = 0.5,
+  method = "kde"
+)
+
+bf$BF12
+bf$logBF12
+```
+
+You can also use a simple local bin estimate instead of kernel density
+estimation:
+
+```r
+bf_bin <- bayes_factor_alpha_point_vs_uniform01(
+  fit,
+  alpha0 = 0.5,
+  method = "bin",
+  eps_bin = 1e-3
+)
+```
+
+Interpretation:
+
+- `BF12 > 1` supports the point null `al = alpha0`.
+- `BF12 < 1` supports the Uniform(0,1) alternative.
+- `logBF12` is the natural log of the Bayes factor.
+
 ## Installing from a local clone
 
 If you have already cloned the repository:
@@ -191,4 +237,5 @@ After installation:
 
 ```r
 ?bayesian_mcmc
+?bayes_factor_alpha_point_vs_uniform01
 ```

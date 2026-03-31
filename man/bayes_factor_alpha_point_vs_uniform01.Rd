@@ -41,6 +41,14 @@ from column \code{N + 2} of \code{fit$samples}, where \code{N = fit$N}.
 The returned \code{BF12} is computed as posterior density divided by prior
 density at \code{alpha0}. Under the Uniform(0,1) prior, the prior density
 equals 1 everywhere in \code{[0,1]}.
+
+Values larger than 1 indicate more posterior mass near \code{alpha0} than
+would be expected under the Uniform(0,1) prior. Values smaller than 1
+indicate evidence against the point null.
+
+The \code{"kde"} method is smoother and usually preferable for moderate or
+large posterior samples. The \code{"bin"} method is a simpler local estimate
+that can be useful as a quick sensitivity check.
 }
 \examples{
 x <- matrix(
@@ -62,4 +70,5 @@ fit <- bayesian_mcmc(
 )
 
 bayes_factor_alpha_point_vs_uniform01(fit, alpha0 = 0.5)
+bayes_factor_alpha_point_vs_uniform01(fit, alpha0 = 0.5, method = "bin")
 }
