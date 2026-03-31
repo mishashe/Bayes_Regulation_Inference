@@ -1,19 +1,19 @@
 # BayesRegulationInference
 
-`BayesRegulationInference` is an R package for running Bayesian MCMC inference on lineage-level time series using a compiled C++ backend. It is used and described in detail in the article !!!.
+`BayesRegulationInference` is an R package for Bayesian MCMC inference on lineage-level time series using a compiled C++ backend.
 
-The package exposes one main function, `bayesian_mcmc()`, which takes a numeric matrix of observations and returns posterior samples together with summary statistics and acceptance diagnostics.
+The package provides `bayesian_mcmc()`, which takes a numeric matrix of observations and returns posterior samples, summary statistics, and acceptance diagnostics.
 
 ## Installation from GitHub
 
-You can install the package directly from your GitHub repository with `remotes`:
+Install the package directly from GitHub with `remotes`:
 
 ```r
 install.packages("remotes")
 remotes::install_github("mishashe/Bayes_Regulation_Inference")
 ```
 
-If you prefer `devtools`, this works as well:
+If you prefer `devtools`, you can use:
 
 ```r
 install.packages("devtools")
@@ -41,13 +41,13 @@ library(BayesRegulationInference)
 - `NA` and `NaN` values are ignored.
 - By default, zeros are treated as padding and ignored.
 
-That default is useful when different lineages have different observed lengths and shorter lineages are padded with zeros to fit into one rectangular matrix.
+This default is useful when lineages have different observed lengths and shorter lineages are padded with zeros to fit a rectangular matrix.
 
 If zero is a real measurement in your data, set `zeroIsPadding = FALSE`.
 
 ## Bundled example input file
 
-The package includes the CSV file `cell_size_simulation.csv` under `extdata`.
+The package includes a bundled CSV file, `cell_size_simulation.csv`, under `extdata`.
 
 You can load it after installation with:
 
@@ -61,7 +61,7 @@ csv_path <- system.file(
 vM <- as.matrix(read.csv(csv_path, header = FALSE))
 ```
 
-## Full example script with output plots
+## Full Example with Output Plot
 
 The package ships with an installed example script at `inst/examples/example.R`.
 
@@ -119,13 +119,13 @@ bf_alpha_05 <- bayes_factor_alpha_point_vs_uniform01(
 )
 ```
 
-This example `1e7` MCMC iterations takes about 13 minutes.
+This `1e7`-iteration example took about 760 seconds, or roughly 12 minutes 40 seconds, on this machine.
 
 Example output plot:
 
 ![Posterior density of al](README_files/alpha_density_kde.png)
 
-Expected console output from the example run:
+Expected console output from the long example run:
 
 ```text
 Posterior summaries (mean +/- half-width of 95% CrI)
@@ -142,7 +142,7 @@ BF12   : 22.1478
 logBF12: 3.0977
 ```
 
-## Minimal example
+## Minimal Example
 
 ```r
 library(BayesRegulationInference)
@@ -167,9 +167,9 @@ fit <- bayesian_mcmc(
 )
 ```
 
-## Inspect the results
+## Inspect the Results
 
-The returned object is a list. Common components:
+The returned object is a list. Common components include:
 
 - `samples`: posterior draws matrix.
 - `logPost`: log-posterior value for each retained draw.
@@ -213,7 +213,7 @@ fit <- bayesian_mcmc(
 )
 ```
 
-## Parameter layout
+## Parameter Layout
 
 The parameter vector is ordered as:
 
@@ -224,7 +224,7 @@ The parameter vector is ordered as:
 - `sig0`: across-lineage standard deviation.
 - `sig_meas`: measurement noise scale.
 
-## Customizing the sampler
+## Customize the Sampler
 
 You can override defaults when needed:
 
@@ -251,20 +251,16 @@ Advanced arguments:
 
 The expected length of `lb_`, `ub_`, and `par0_` is `nrow(vM) + 5`.
 
-## Bayes factor for `alpha`
+## Bayes Factor for `alpha`
 
-The package also provides `bayes_factor_alpha_point_vs_uniform01()` for a
-Savage-Dickey style Bayes factor on the `al` parameter.
+The package also provides `bayes_factor_alpha_point_vs_uniform01()` for a Savage-Dickey style Bayes factor on the `al` parameter.
 
 It compares:
 
 - `H1`: `al = alpha0`
 - `H2`: `al ~ Uniform(0, 1)`
 
-The function uses posterior samples from `fit$samples` and estimates the
-posterior density at `alpha0`. Since the prior under `H2` is Uniform(0,1), the
-prior density is 1, so the Bayes factor is just the posterior density estimate
-at that point.
+The function uses posterior samples from `fit$samples` and estimates the posterior density at `alpha0`. Since the prior under `H2` is Uniform(0,1), the prior density is 1, so the Bayes factor is the posterior density estimate at that point.
 
 Example:
 
@@ -279,8 +275,7 @@ bf$BF12
 bf$logBF12
 ```
 
-You can also use a simple local bin estimate instead of kernel density
-estimation:
+You can also use a simple local bin estimate instead of kernel density estimation:
 
 ```r
 bf_bin <- bayes_factor_alpha_point_vs_uniform01(
@@ -297,7 +292,7 @@ Interpretation:
 - `BF12 < 1` supports the Uniform(0,1) alternative.
 - `logBF12` is the natural log of the Bayes factor.
 
-## Installing from a local clone
+## Install from a Local Clone
 
 If you have already cloned the repository:
 
@@ -312,7 +307,7 @@ Or from a shell:
 R CMD INSTALL Bayes_Regulation_Inference
 ```
 
-## Help inside R
+## Help Inside R
 
 After installation:
 
